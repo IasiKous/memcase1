@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мем Кейс Рулетка</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #1e1e1e; color: #fff; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+  h1 { margin-bottom: 10px; }
+  .balance { position: absolute; top: 20px; right: 20px; font-size: 20px; background: #333; padding: 10px 15px; border-radius: 10px; }
+  .cases { display: flex; gap: 20px; margin-top: 50px; flex-wrap: wrap; justify-content: center; }
+  .case { background: #333; padding: 20px; border-radius: 15px; width: 180px; text-align: center; cursor: pointer; transition: transform 0.2s; }
+  .case:hover { transform: scale(1.05); }
+  .result { margin-top: 30px; font-size: 18px; padding: 10px 20px; background: #222; border-radius: 10px; }
+</style>
+</head>
+<body>
+
+<h1>Мем Кейс Рулетка</h1>
+<div class="balance">Баланс: <span id="balance">1000</span> монет</div>
+
+<div class="cases">
+  <div class="case" onclick="openCase('free')">Бесплатный кейс (0 монет)</div>
+  <div class="case" onclick="openCase('bronze')">Бронзовый кейс (200 монет)</div>
+  <div class="case" onclick="openCase('silver')">Серебряный кейс (500 монет)</div>
+  <div class="case" onclick="openCase('gold')">Золотой кейс (1000 монет)</div>
+  <div class="case" onclick="openCase('legend')">Легендарный кейс (2000 монет)</div>
+</div>
+
+<div class="result" id="result">Открой кейс, чтобы получить мем!</div>
+
+<script>
+let balance = 1000;
+document.getElementById('balance').innerText = balance;
+
+const cases = {
+  free: [
+    { name: "Мем 1", value: 100 },
+    { name: "Мем 2", value: 200 },
+    { name: "Мем 3", value: 500 }
+  ],
+  bronze: [
+    { name: "Мем 4", value: 100 },
+    { name: "Мем 5", value: 300 },
+    { name: "Мем 6", value: 600 }
+  ],
+  silver: [
+    { name: "Мем 7", value: 400 },
+    { name: "Мем 8", value: 700 },
+    { name: "Мем 9", value: 1000 }
+  ],
+  gold: [
+    { name: "Мем 10", value: 800 },
+    { name: "Мем 11", value: 1200 },
+    { name: "Мем 12", value: 1500 }
+  ],
+  legend: [
+    { name: "Мем 13", value: 2000 },
+    { name: "Мем 14", value: 3000 },
+    { name: "Мем 15", value: 5000 }
+  ]
+};
+
+const prices = {
+  free: 0,
+  bronze: 200,
+  silver: 500,
+  gold: 1000,
+  legend: 2000
+};
+
+function openCase(caseType) {
+  if (balance < prices[caseType]) {
+    alert("Недостаточно монет!");
+    return;
+  }
+  balance -= prices[caseType];
+  document.getElementById('balance').innerText = balance;
+
+  const items = cases[caseType];
+  const randomIndex = Math.floor(Math.random() * items.length);
+  const item = items[randomIndex];
+  
+  balance += item.value;
+  document.getElementById('balance').innerText = balance;
+  document.getElementById('result').innerText = `Вы открыли ${caseType} кейс и получили "${item.name}" стоимостью ${item.value} монет!`;
+}
+</script>
+
+</body>
+</html>
